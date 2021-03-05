@@ -17,7 +17,7 @@ const Layout = () => {
     
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
-        googleMapsApiKey: "AIzaSyB1anZ_H2UxTJ8Xl8eeofQXrocg7UJDoAw"
+        googleMapsApiKey: ""
       })
       
     const getLocation = () => {
