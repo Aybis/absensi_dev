@@ -1,7 +1,7 @@
 import React, { useRef, useState } from 'react';
+import { Maximize } from 'react-feather';
 import { Link, NavLink } from 'react-router-dom';
 import { CSSTransition } from 'react-transition-group';
-import Logo from '../assets/svg/Logo.svg';
 import DropdownUser from './DropdownUser';
 import './Header.css';
 
@@ -29,7 +29,7 @@ const Header = () => {
                 <div className="w-full flex flex-row justify-between">
                     {/* Logo  */}
                     <Link to="/" className="flex-shrink-0 flex items-center gap-2">
-                        <img src={Logo} className="App-logo" alt="logo" />
+                        <Maximize />
                         <p className="text-xl font-bold font-mono ">POP</p>
                     </Link>
 
@@ -63,7 +63,7 @@ const Header = () => {
                             <CSSTransition
                                 in={dropdown}
                                 timeout={300}
-                                  nodeRef={nodeRef}
+                                nodeRef={nodeRef}
                                 classNames="fade"
                                 unmountOnExit
                                 

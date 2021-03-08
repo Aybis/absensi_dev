@@ -1,123 +1,328 @@
-import React, { useEffect } from 'react'
-import Logo from '../assets/svg/Logo.svg';
-import { GoogleMap, Marker, useJsApiLoader } from '@react-google-maps/api';
+import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom';
+import Header from '../Components/Header';
+import LocationSvg from '../assets/svg/Location.svg'
+import TravellerSvg from '../assets/svg/Travellers.svg'
+import './styles.css';
+import { MoreVertical, UserCheck } from 'react-feather';
+import AvatarPng from '../assets/png/avatar.png'
+import ButtonCheckInAndOut from '../Components/ButtonCheckInAndOut';
+class Layout extends Component {
 
-
-const containerStyle = {
-    height: '400px'
-};
-
-const center = {
-    lat:-6.3356113,lng:107.3229187
-  }
-
-const Layout = () => {
-    
-    const [location, setLocation] = React.useState(null);
-    
-    const { isLoaded } = useJsApiLoader({
-        id: 'google-map-script',
-        googleMapsApiKey: ""
-      })
-      
-    const getLocation = () => {
-        if(navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition(position => {
-                setLocation({lat: position.coords.latitude, lng: position.coords.longitude})
-            })
-        } else {
-             alert('Geolocation is not supported by this browser');
+    constructor() {
+        super();
+        this.state = {
+            isReady : false,
+            isLoading: false,
+            isModal: false,
+            checkIn: true,
+            checkOut: false,
+            nodeRef: React.createRef(),
         }
     }
-
-    const onLoadMarker = marker => {
-        getLocation();
+    
+    openModal = () => {
+        let isModal = this.state.isModal;
+        this.setState({isModal: !isModal})
     }
-      
-    return(
-        <>
-            <div className="min-h-screen overflow-auto">
-                <nav className="bg-white border-2 border-gray-100 top-0">
-                        <div className="max-w-7xl mx-auto px-4 sm:px-6 bottom-0 lg:px-8">
-                            <div className="flex justify-between h-16">
-                                <div className="w-full flex flex-row justify-between">
-                                    {/* Logo  */}
-                                    <div className="flex-shrink-0 flex items-center gap-2">
-                                        <img src={Logo} className="App-logo" alt="logo" />
-                                        <p className="text-xl font-bold font-mono ">POP</p>
-                                    </div>
 
-                                    {/* Menu Link  */}
-                                    <div className="space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                                        <a href={3} className="inline-flex items-center px-1 pt-1 border-b-2 border-indigo-400 text-sm font-medium leading-5 text-gray-900 focus:outline-none focus:border-indigo-700 transition duration-150 ease-in-out">
-                                            Home
-                                        </a>
-                                        <a href={3} className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                            Report
-                                        </a>
-                                        <a href={3} className="inline-flex items-center px-1 pt-1 border-b-2 border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
-                                            Logout
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
+    closeModal = () => {
+        let isModal = this.state.isModal;
+        this.setState({isModal: !isModal})
+    }
 
-                        </div>
-                    </nav>
+    onCheckInAndOut = () => {
+        let checkIn = this.state.checkIn;
+        let checkOut = this.state.checkOut;
+
+        this.setState(
+            {
+                checkIn : !checkIn,
+                checkOut : !checkOut,
+            }
+        )
+
+    }
+
+    componentDidMount() {
+        console.log('did mount');
+    }
+
+    componentWillUnmount() {
+        console.log('will unmount');
+    }
 
 
-                <main className="bg-gray-100">
-                    <div className="py-12">
-                        <div className="bg-white container mx-auto bg-red sm:w-2/6 md:w-2/5 rounded-lg p-8">
-                            <div className="flex flex-col justify-between gap-4 mx-4 overflow-y-hidden gap-4">
-                                <div className="bg-black h-auto rounded w-auto">
-                                {isLoaded ?  
-                                    <GoogleMap
-                                        mapContainerStyle={containerStyle}
-                                        center={center}
-                                        zoom={10}
+    render() {
+        return (
+            <>
+               <Header />
+                <main className="container mx-auto w-full  px-24 py-12">      
+
+                    {/* Title and Navbar */}
+                    <div className="flex flex-row justify-between items-center">
+                        <h1 className="text-2xl font-semibold font text-coolGray-900 text-left">Home</h1>
+                        {/* Breadcumbs */}
+                        <nav>
+                            <ol className="list-reset pl-4 rounded flex text-grey">
+                                <li className="px-2">
+                                    <NavLink 
+                                        to="/" 
+                                        exact 
+                                        className="font-semibold text-gray-800"  
+                                        activeClassName="text-gray-300 cursor-not-allowed"
                                     >
-                                         <Marker
-                                            onLoad={onLoadMarker}
-                                            position={location}
-                                            />
-                                    </GoogleMap> : ''}
+                                        Home
+                                    </NavLink>
+                                </li>
+                                <li>/</li>
+                                
+                            </ol>
+                        </nav>
+                    </div>
+
+                    {/* Content */}
+                    <div className="pt-12 px-4">
+                        {/* Grid */}
+                        <div className="grid grid-cols-4 grid-flow-row gap-8">
+                            {/* Col Span 1 */}
+                            <div className="bg-white shadow-lg rounded-lg col-span-1 row-start-1 row-end-2">
+                                <div className="flex flex-col items-center gap-8 p-4">
+                                    <span className="h-32 w-32 rounded-full bg-lime-200">
+                                        <img src={AvatarPng} alt="img" className="object-cover h-32 w-32 rounded-full" />
+                                    </span>
+                                    <div className="flex flex-col text-center text-gray-800 gap-2 ">
+                                        <p className="text-sm">Welcome Back.</p>
+                                        <h3 className="font-bold text-lg ">Abdul Muchtar Astria</h3>
+                                    </div>
+                                    <button className="block bg-blue-300 text-white w-full h-12 rounded-full font-semibold">
+                                        View Profile
+                                    </button>
                                 </div>
-                                <div className="bg-black h-64 rounded">
-                                    
+                            </div> 
+
+                            {/* Col Span 4 */}
+                            <div className="flex bg-blue-300 shadow-lg rounded-lg col-span-5 col-start-2 col-end-5 row-start-1 row-end-2 px-8 items-center">
+                                <div className="flex flex-row items-center gap-4">
+                                    <div className=" flex flex-col gap-20">
+                                        <h1 className="text-3xl text-gray-800 font-semibold">
+                                            Hey, don't forget to attend every day.
+                                            so I can pay attention to you
+                                        </h1>
+                                        <div className="flex items-center">
+                                            <ButtonCheckInAndOut checkIn={this.state.checkIn} checkOut={this.state.checkOut} onClick={this.onCheckInAndOut} />
+                                            <p className="inline-block pl-12 text-gray-500">Jumat, 24 January 2021 / 07:14 AM</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="flex flex-col bg-white h-60 w-60 items-center justify-center rounded-xl p-4 gap-4">
+                                        <img src={LocationSvg} alt="img" className="object-fit" />
+                                        <p className="text-left text-md font-bold">Check in wherever you are</p>
+                                    </div>
                                 </div>
-                                <div className="flex flex-row h-auto rounded gap-4">
-                                    <select defaultValue={'hadir'} className="block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                                        <option value="hadir" >Hadir</option>
-                                        <option value="ijin">Ijin</option>
-                                        <option value="sakit">Sakit</option>
-                                        <option value="sppd">SPPD</option>
-                                    </select>
-                                    <select defaultValue={'wfo'} className="block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
-                                        <option value="wfo">WFH</option>
-                                        <option value="ijin">WFO</option>
-                                        <option value="sakit">Satelit</option>
-                                    </select>
-                                </div>
-                                <div className="flex flex-col h-auto rounded gap-4">
-                                    <input type="number" className="block w-full bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500" min="0" placeholder="5 Hari" />
-                                    <textarea className="block w-full h-24 bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 resize-none" placeholder="Sakit ?"></textarea>
-                                    <textarea className="block w-full h-24 bg-gray-100 text-gray-700 border border-gray-200 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-gray-500 resize-none" placeholder="Terlambat ?"></textarea>
-                                </div>
-                                <div className="flex flex-row h-auto rounded gap-4">
-                                    <button className="w-1/2 border-2  border-black h-16 text-lg font-bold font-mono rounded-lg"> Check In</button>
-                                    <div className="flex w-1/2 h-16 bg-black items-center justify-center rounded-lg text-center">
-                                        <label htmlFor="image" className="text-white text-lg font-bold font-mono cursor-pointer p-4">Take a Selfie</label>
-                                        <input type="file" className="hidden" accept="image/*" capture="camera" id="imagenpm i react-google-maps" />
+                            </div> 
+
+                            <div className="border-2 border-gray-200 rounded-lg p-4 ">
+                                <h3 className="text-xl font-bold text-center"> Attendance</h3>
+                                <div className="flex flex-row mx-8 gap-8 mt-8 items-center justify-center">
+                                    <span className="h-14 w-14 rounded-full bg-blue-600 items-center flex justify-center">
+                                        <UserCheck className="h-8 w-8 text-white" />
+                                    </span>
+                                    <div>
+                                        <h3 className="text-4xl font-bold">184</h3>
+                                        <h4 className="text-sm font-semibold text-gray-400">Employee</h4>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+
+
+                            <div className="border-2 border-gray-200 rounded-lg p-4 ">
+                                <h3 className="text-xl font-bold text-center">Yet Attendance</h3>
+                                <div className="flex flex-row mx-8 gap-8 mt-8 items-center justify-center">
+                                    <span className="h-14 w-14 rounded-full bg-blue-600 items-center flex justify-center">
+                                        <UserCheck className="h-8 w-8 text-white" />
+                                    </span>
+                                    <div>
+                                        <h3 className="text-4xl font-bold">184</h3>
+                                        <h4 className="text-sm font-semibold text-gray-400">Employee</h4>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div className="border-2 border-gray-200 rounded-lg p-4 ">
+                                <h3 className="text-xl font-bold text-center">Sick</h3>
+                                <div className="flex flex-row mx-8 gap-8 mt-8 items-center justify-center">
+                                    <span className="h-14 w-14 rounded-full bg-blue-600 items-center flex justify-center">
+                                        <UserCheck className="h-8 w-8 text-white" />
+                                    </span>
+                                    <div>
+                                        <h3 className="text-4xl font-bold">184</h3>
+                                        <h4 className="text-sm font-semibold text-gray-400">Employee</h4>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div className="border-2 border-gray-200 rounded-lg p-4 ">
+                                <h3 className="text-xl font-bold text-center">On Duty</h3>
+                                <div className="flex flex-row mx-8 gap-8 mt-8 items-center justify-center">
+                                    <span className="h-14 w-14 rounded-full bg-blue-600 items-center flex justify-center">
+                                        <UserCheck className="h-8 w-8 text-white" />
+                                    </span>
+                                    <div>
+                                        <h3 className="text-4xl font-bold">184</h3>
+                                        <h4 className="text-sm font-semibold text-gray-400">Employee</h4>
+                                    </div>
+                                </div>
+                            </div>
+
+                              {/* Col Span 1 */}
+                              <div className="bg-gradient-to-br from-blueGray-100  to-lightBlue-400 rounded-lg row-start-3">
+                                <div className="flex flex-col items-center gap-16 p-4 justify-between">
+                                    <span className="h-40 w-40 rounded-full bg-amber-300 pt-8">
+                                        <img src={TravellerSvg} alt="img" />
+                                    </span>                                    
+                                    <h1 className="font-bold text-xl text-white mt-12">It's time for the holidays</h1>         
+                                    <button className="block bg-white text-gray-800 w-full h-12 rounded-full font-semibold -mt-6">
+                                        View Detail
+                                    </button>                                                         
+                                </div>
+                            </div> 
+
+                            <div className="bg-white shadow row-start-3 col-span-3 rounded-lg border-2 border-gray-100">
+                                <div className="flex flex-row items-center justify-between p-4">
+                                    <h4 className="text-lg font-semibold text-gray-600">Day Off</h4>
+                                    <MoreVertical className="cursor-pointer" />
+                                </div>
+                                <div className="p-4">
+                                    <table className="table-fixed w-full">
+                                        <thead>
+                                            <tr className="bg-blue-50 text-gray-500 font-bold text-left h-12">
+                                                <th className="text-center rounded-l-md">Date</th>
+                                                <th>Month</th>
+                                                <th>Category</th>
+                                                <th>Description</th>
+                                                <th className="rounded-r-md text-center">Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr className="font-semibold text-left">
+                                                <td>
+                                                    <div className="px-4 pt-4 text-center">
+                                                        <h1 className="text-2xl text-center font-bold">11</h1>
+                                                        <p className="text-gray-500">Kamis</p>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p>Maret</p>
+                                                </td>
+                                                <td>
+                                                    <p>Libur</p>
+                                                </td>
+                                                <td className="overflow-ellipsis">
+                                                    <p>Hari Isra Mira'j Nabi Muhammad</p>
+                                                </td>
+                                                <td className="text-center">
+                                                    <p className="text-blue-400">Available</p>
+                                                </td>
+                                            </tr>
+                                            <tr className="font-semibold text-left text-gray-400">
+                                                <td>
+                                                    <div className="px-4 pt-4  text-center">
+                                                        <h1 className="text-2xl text-center font-bold">12</h1>
+                                                        <p className="text-gray-500">Jumat</p>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p>Maret</p>
+                                                </td>
+                                                <td>
+                                                    <p>Cuti Bersama</p>
+                                                </td>
+                                                <td className="overflow-ellipsis">
+                                                    <p>Cuti Bersama Isra Mira'j Nabi Muhammad </p>
+                                                </td>
+                                                <td className="text-center">
+                                                    <p className="text-red-400">Canceled</p>
+                                                </td>
+                                            </tr>
+                                            <tr className="font-bold text-left">
+                                                <td>
+                                                    <div className="px-4 pt-4  text-center">
+                                                        <h1 className="text-2xl text-center font-bold">12</h1>
+                                                        <p className="text-gray-500">Rabu</p>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p>Mei</p>
+                                                </td>
+                                                <td>
+                                                    <p>Libur</p>
+                                                </td>
+                                                <td className="overflow-ellipsis">
+                                                    <p>Libur Hari Raya Idul Fitri </p>
+                                                </td>
+                                                <td className="text-center">
+                                                    <p className="text-blue-400">Available</p>                                                
+                                                </td>
+                                            </tr>
+                                            <tr className="font-bold text-left">
+                                                <td>
+                                                    <div className="px-4 pt-4  text-center">
+                                                        <h1 className="text-2xl text-center font-bold">13</h1>
+                                                        <p className="text-gray-500">Kamis</p>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p>Mei</p>
+                                                </td>
+                                                <td>
+                                                    <p>Libur</p>
+                                                </td>
+                                                <td className="overflow-ellipsis">
+                                                    <p>Libur Hari Raya Idul Fitri </p>
+                                                </td>
+                                                <td className="text-center">
+                                                    <p className="text-blue-400">Available</p>                                                
+                                                </td>
+                                            </tr>
+                                            <tr className="font-bold text-left">
+                                                <td>
+                                                    <div className="px-4 pt-4  text-center">
+                                                        <h1 className="text-2xl text-center font-bold">14</h1>
+                                                        <p className="text-gray-500">Jumat</p>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p>Mei</p>
+                                                </td>
+                                                <td>
+                                                    <p>Libur</p>
+                                                </td>
+                                                <td className="overflow-ellipsis">
+                                                    <p>Libur Hari Raya Idul Fitri </p>
+                                                </td>
+                                                <td className="text-center">
+                                                    <p className="text-blue-400">Available</p>                                                
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                
+
+
+
+                        </div>    {/* End Grid */}
+            
                     </div>
                 </main>
-            </div>
-        </>
-    );
+            </>
+        )
+    }
 }
 
-export default Layout;
+export default Layout

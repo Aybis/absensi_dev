@@ -1,18 +1,44 @@
 import React from 'react';
+import { Briefcase, FileText, Folder, LogOut, Map, MapPin, User, Users } from 'react-feather';
 import { Link } from 'react-router-dom';
 
 
 const DropdownUser = ({noderef}) => {
     return (
-        <div ref={noderef}  className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
-            <div className="p-1  divide-y divide-grau-200" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-                <Link to="setting" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Account settings</Link>
-                <Link to="/profile" className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">Profile</Link>
-                <form method="POST" action="#">
-                    <button type="submit" className="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900 focus:outline-none focus:bg-gray-100 focus:text-gray-900" role="menuitem">
-                    Log out
-                    </button>
-                </form>
+        <div ref={noderef}  className="origin-top-right absolute right-0 mt-2 w-72 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
+            <div className="grid grid-cols-3 gap-4 p-4">
+                <Link to="/" className="flex flex-col items-center justify-center text-gray-500 border border-gray-100 rounded-md px-8 py-2 hover:bg-red-600 hover:text-white ease-in-out duration-500 hover:font-bold">
+                    <User />
+                    <p className="text-xs">Account</p>
+                </Link>
+                <Link to="/" className="flex flex-col items-center justify-center text-gray-500 border border-gray-100 rounded-md px-8 py-2 hover:bg-red-600 hover:text-white ease-in-out duration-500 hover:font-bold">
+                    <Users />
+                    <p className="text-xs">Inforekan</p>
+                </Link>
+                <Link to="/" className="flex flex-col items-center justify-center text-gray-500 border border-gray-100 rounded-md px-8 py-2 hover:bg-red-600 hover:text-white ease-in-out duration-500 hover:font-bold">
+                    <Briefcase />
+                    <p className="text-xs">SPPD</p>
+                </Link>
+                <Link to="/" className="flex flex-col items-center justify-center text-gray-500 border border-gray-100 rounded-md px-8 py-2 hover:bg-red-600 hover:text-white ease-in-out duration-500 hover:font-bold">
+                    <Map />
+                    <p className="text-xs">Cuti</p>
+                </Link>
+                <Link to="/" className="flex flex-col items-center justify-center text-gray-500 border border-gray-100 rounded-md px-8 py-2 hover:bg-red-600 hover:text-white ease-in-out duration-500 hover:font-bold">
+                    <Folder />
+                    <p className="text-xs">FTP</p>
+                </Link>
+                <Link to="/" className="flex flex-col items-center justify-center text-gray-500 border border-gray-100 rounded-md px-8 py-2 hover:bg-red-600 hover:text-white ease-in-out duration-500 hover:font-bold">
+                    <MapPin />
+                    <p className="text-xs">POP</p>
+                </Link>
+                <Link to="/" className="flex flex-col items-center justify-center text-gray-500 border border-gray-100 rounded-md px-8 py-2 hover:bg-red-600 hover:text-white ease-in-out duration-500 hover:font-bold">
+                    <FileText />
+                    <p className="text-xs">SPT</p>
+                </Link>
+                <Link to="/" className="flex flex-col items-center justify-center text-gray-500 border border-gray-100 rounded-md px-8 py-2 hover:bg-red-600 hover:text-white ease-in-out duration-500 hover:font-bold">
+                    <LogOut />
+                    <p className="text-xs">Logout</p>
+                </Link>
             </div>
         </div>    
     )
