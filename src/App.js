@@ -1,10 +1,11 @@
 import React from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
-import Layout from '../src/Layout/Index';
-import Apps from './Page/Apps';
+import Abensi from './Layout/Absensi';
+import Apps from './Layout/Apps';
+import Login from './Page/Login';
+import LoginSuccess from './Page/LoginSuccess';
 import NotFound from './Page/NotFound';
-import Report from './Page/Report';
-import User from './Page/User';
+import { ProtectedRoute } from './utils/protectedRoute';
 
 
 function App() {
@@ -12,10 +13,8 @@ function App() {
       <BrowserRouter>
         <div>
             <Switch>
-                <Route path="/" component={Apps} exact={true} />
-                <Route path="/absen" component={Layout} exact={true} />
-                <Route path="/user" component={User}  />
-                <Route path="/report" component={Report} />
+                <Route path="/" component={Login} exact={true} />
+                <ProtectedRoute path="/success" component={LoginSuccess} exact={true} />
                 <Route path="/*" component={NotFound} />
             </Switch>
         </div>

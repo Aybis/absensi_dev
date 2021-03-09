@@ -7,7 +7,9 @@ import './styles.css';
 import { MoreVertical, UserCheck } from 'react-feather';
 import AvatarPng from '../assets/png/avatar.png'
 import ButtonCheckInAndOut from '../Components/ButtonCheckInAndOut';
-class Layout extends Component {
+
+
+class Abensi extends Component {
 
     constructor() {
         super();
@@ -325,4 +327,4 @@ class Layout extends Component {
     }
 }
 
-export default Layout
+export default Abensi;
